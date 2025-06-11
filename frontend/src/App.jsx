@@ -15,7 +15,7 @@ const App = () => {
   const [isReconnecting, setIsReconnecting] = useState(false);
 
   useEffect(() => {
-    const socketobj = io('http://localhost:3001', {
+    const socketobj = io('https://hand-cricket-game-m8ei.onrender.com/', {
       reconnection: true,
       reconnectionAttempts: 5,
       reconnectionDelay: 1000,
