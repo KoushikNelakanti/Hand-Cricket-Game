@@ -92,6 +92,11 @@ const HandCricket = () => {
             setPlayerName(event.target.value);
         }
         const handleSubmit = () => {
+             const audio = audioRef.current;
+            audio.currentTime = 0; // rewind if clicked quickly
+            audio.volume = 0.7;
+            audio.loop = true;
+            audio.play().catch(err => console.error("Click sound error:", err));
             setNameEntered(true);
         }
         return (
