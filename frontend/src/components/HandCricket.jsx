@@ -28,7 +28,9 @@ const HandCricket = () => {
      const handleStart = ()=>{
         socket.emit('startGame',roomId,true);
      }
-    if (signal) {
+  useEffect(() => {
+  if (!signal) return;
+
   const audio = audioRef.current;
   audio.loop = true;
   audio.volume = 0.5;
@@ -39,9 +41,16 @@ const HandCricket = () => {
     })
     .catch((err) => {
       console.log("Playback failed:", err);
-      navigate(`/hand-cricket-game/${roomId}`); // still navigate if failed
+      navigate(`/hand-cricket-game/${roomId}`); // proceed anyway
     });
-}
+
+  // Optional: clean up on unmount
+  return () => {
+    audio.pause();
+    audio.currentTime = 0;
+  };
+}, [signal, navigate, roomId]);
+
      useEffect(()=>{
         if(!socket) return;
         const handleAddPlayer = (response)=>{
