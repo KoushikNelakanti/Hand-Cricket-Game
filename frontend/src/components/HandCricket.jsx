@@ -1,7 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState,useRef } from 'react'
 import { SocketContext } from '../App';
 import { useNavigate, useParams } from 'react-router-dom';
 import HandCricketGame from './HandCricketGame';
+import bgMusic from './assets/background.mp3';
 const HandCricket = () => {
      const {roomId} = useParams();
      const socket = useContext(SocketContext);
@@ -13,6 +14,7 @@ const HandCricket = () => {
      const [currentUrl, setCurrentUrl] = useState('');
      const [showCopySuccess, setShowCopySuccess] = useState(false);
      const navigate = useNavigate();
+     const audioRef = useRef(new Audio(bgMusic));
 
      useEffect(() => {
          setCurrentUrl(window.location.href);
@@ -26,9 +28,20 @@ const HandCricket = () => {
      const handleStart = ()=>{
         socket.emit('startGame',roomId,true);
      }
-     if(signal){
-        navigate(`/hand-cricket-game/${roomId}`);
-     }
+    if (signal) {
+  const audio = audioRef.current;
+  audio.loop = true;
+  audio.volume = 0.5;
+
+  audio.play()
+    .then(() => {
+      navigate(`/hand-cricket-game/${roomId}`);
+    })
+    .catch((err) => {
+      console.log("Playback failed:", err);
+      navigate(`/hand-cricket-game/${roomId}`); // still navigate if failed
+    });
+}
      useEffect(()=>{
         if(!socket) return;
         const handleAddPlayer = (response)=>{
