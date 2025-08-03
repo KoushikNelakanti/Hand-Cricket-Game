@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState,useRef } from 'react'
 import { SocketContext } from '../App';
 import { useNavigate, useParams } from 'react-router-dom';
 import HandCricketGame from './HandCricketGame';
-import bgMusic from './assets/background.mp3';
+import bgMusic from '../assets/background.mp3';
 const HandCricket = () => {
      const {roomId} = useParams();
      const socket = useContext(SocketContext);
