@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import clickSound from '../assets/click.wav'
 
 const NumberGrid = ({number, setNumber}) => {
     const [selectedNumber, setSelectedNumber] = useState(null);
     const [showAnimation, setShowAnimation] = useState(false);
     const numbers = Array.from({ length: 10 }, (_, i) => i + 1);
-
+    const click = new Audio(clickSound);
+    click.volume = 0.7;
     const handleNumberSelect = (num) => {
+         click.play().catch((err) => {
+    console.error("Click sound play error:", err);
+  });
         setSelectedNumber(num);
         setShowAnimation(true);
         setNumber(num);
