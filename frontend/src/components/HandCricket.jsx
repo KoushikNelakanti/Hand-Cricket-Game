@@ -30,25 +30,8 @@ const HandCricket = () => {
      }
   useEffect(() => {
   if (!signal) return;
-
-  const audio = audioRef.current;
-  audio.loop = true;
-  audio.volume = 0.5;
-
-  audio.play()
-    .then(() => {
-      navigate(`/hand-cricket-game/${roomId}`);
-    })
-    .catch((err) => {
-      console.log("Playback failed:", err);
-      navigate(`/hand-cricket-game/${roomId}`); // proceed anyway
-    });
-
-  // Optional: clean up on unmount
-  return () => {
-    audio.pause();
-    audio.currentTime = 0;
-  };
+ navigate(`/hand-cricket-game/${roomId}`); 
+  
 }, [signal, navigate, roomId]);
 
      useEffect(()=>{
